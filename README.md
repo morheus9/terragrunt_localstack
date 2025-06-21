@@ -6,11 +6,10 @@ cd environments/local
 terragrunt init
 terragrunt plan
 terragrunt apply
-
-
-
-
 ```
+
+
+
 install tflocal if you need:
 ```bash
 sudo apt install pipx
