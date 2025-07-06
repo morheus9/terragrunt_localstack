@@ -10,7 +10,7 @@ terragrunt apply
 
 
 
-install tflocal if you need:
+install tflocal if you need but here is terragrunt:
 ```bash
 sudo apt install pipx
 pipx ensurepath
