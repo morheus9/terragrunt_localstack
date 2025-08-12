@@ -2,11 +2,19 @@
 
 ```bash
 localstack start
-cd environments/local
+export AWS_ACCESS_KEY_ID="test"
+export AWS_SECRET_ACCESS_KEY="test"
+export AWS_DEFAULT_REGION="us-east-1"
+cd dev
 terragrunt init
 terragrunt plan
 terragrunt apply
 ```
+Check status of services of localstack 
+```bash
+curl http://localhost:4566/_localstack/health | jq
+```
+
 
 
 
