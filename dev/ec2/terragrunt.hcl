@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-ec2-instance.git//.?ref=v4.0.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-ec2-instance.git//.?ref=v6.0.2"
 }
 
 include "root" {
@@ -9,17 +9,17 @@ include "root" {
 
 dependency "vpc" {
   config_path                             = "../vpc/"
-  mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "terragrunt-info", "show"] # Configure mock outputs for the "init", "validate", "plan", etc. commands that are returned when there are no outputs available (e.g the module hasn't been applied yet.)
+  mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "apply", "destroy", "terragrunt-info", "show"]
   mock_outputs = {
-    public_subnets = ["subnet-fake"]
+    public_subnets = ["subnet-12345678"]
   }
 }
 
 dependency "sg" {
   config_path                             = "../sg/"
-  mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "terragrunt-info", "show"]
+  mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "apply", "destroy", "terragrunt-info", "show"]
   mock_outputs = {
-    sg_id = "sg-fake-id"
+    sg_id = "sg-abcdef12"
   }
 }
 
@@ -32,4 +32,7 @@ inputs = {
   tags = {
     Name = "${include.root.locals.deployment_prefix}-bastion-host"
   }
+
+  # Correct format - use empty map instead of empty list
+  network_interface = {}
 }

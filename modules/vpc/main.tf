@@ -1,6 +1,5 @@
 terraform {
   required_version = ">= 0.13.1"
-
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -16,8 +15,7 @@ locals {
 }
 
 module "vpc" {
-  source                 = "terraform-aws-modules/vpc/aws"
-  version                = "3.14.0"
+  source                 = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v6.0.1"
   name                   = "${var.deployment_prefix}-VPC"
   cidr                   = "${var.cidr}/16"
   azs                    = data.aws_availability_zones.available.names

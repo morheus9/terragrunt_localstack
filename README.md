@@ -1,14 +1,15 @@
 ## Example of [terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install) config for AWS ([localstack](https://docs.localstack.cloud/getting-started/installation))
 
 ```bash
-localstack start
+SERVICES=s3,sts,ec2,vps,dynamodb localstack start
 export AWS_ACCESS_KEY_ID="test"
 export AWS_SECRET_ACCESS_KEY="test"
 export AWS_DEFAULT_REGION="us-east-1"
 cd dev
 terragrunt init
-terragrunt plan
-terragrunt apply
+terragrunt run-all plan
+terragrunt run-all apply
+terragrunt run-all destroy
 ```
 Check status of services of localstack 
 ```bash
