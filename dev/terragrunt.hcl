@@ -1,15 +1,14 @@
-#remote_state {
-#  backend = "local"
-#  generate = {
-#    path      = "backend.tf"
-#    if_exists = "overwrite_terragrunt"
-#  }
-#  config = {
-#    path = "terragrunt.tfstate"
-#  }
-#}
+remote_state {
+  backend = "local"
+  generate = {
+    path      = "backend.tf"
+    if_exists = "overwrite_terragrunt"
+  }
+  config = {
+    path = "terragrunt.tfstate"
+  }
+}
 
-# Удаляем дублирующиеся блоки locals и inputs
 locals {
   source_version    = "v0.1.2"
   aws_region        = "us-east-1"
@@ -32,22 +31,26 @@ inputs = {
   default_tags      = local.default_tags
 }
 
-remote_state {
-  backend = "s3"
-  generate = {
-    path      = "backend.tf"
-    if_exists = "overwrite_terragrunt"
-  }
-  config = {
-    bucket              = "${local.deployment_prefix}-terragrunt-states-backend-demo"
-    key                 = "${path_relative_to_include()}/terragrunt.tfstate"
-    region              = local.aws_region
-    encrypt             = true
-    dynamodb_table      = "${local.deployment_prefix}-terragrunt-states-backend-demo"
-    s3_bucket_tags      = local.default_tags
-    dynamodb_table_tags = local.default_tags
-  }
-}
+#remote_state {
+#  backend = "s3"
+#  generate = {
+#    path      = "backend.tf"
+#    if_exists = "overwrite_terragrunt"
+#  }
+#  config = {
+#    bucket              = "${local.deployment_prefix}-terragrunt-states-backend-dev"
+#    key                 = "${path_relative_to_include()}/terraform.tfstate"
+#    region              = local.aws_region
+#    encrypt             = true
+#    dynamodb_table      = "${local.deployment_prefix}-terragrunt-states-backend-dev"
+#    acl                 = "bucket-owner-full-control"
+#    s3_bucket_tags      = local.default_tags
+#    dynamodb_table_tags = local.default_tags
+#    access_key          = "test"
+#    secret_key          = "test"
+#    force_path_style    = true
+#  }
+#}
 
 generate "provider" {
   path      = "provider.tf"
@@ -64,17 +67,29 @@ provider "aws" {
   skip_requesting_account_id  = true
 
   endpoints {
-    ec2        = "http://localhost:4566"
-    apigateway = "http://localhost:4566"
-    dynamodb   = "http://localhost:4566"
-    iam        = "http://localhost:4566"
-    kinesis    = "http://localhost:4566"
-    lambda     = "http://localhost:4566"
-    s3         = "http://s3.localhost.localstack.cloud:4566"
-    ses        = "http://localhost:4566"
-    sns        = "http://localhost:4566"
-    sqs        = "http://localhost:4566"
-    sts        = "http://localhost:4566"
+    apigateway     = "http://localhost:4566"
+    apigatewayv2   = "http://localhost:4566"
+    cloudformation = "http://localhost:4566"
+    cloudwatch     = "http://localhost:4566"
+    dynamodb       = "http://localhost:4566"
+    ec2            = "http://localhost:4566"
+    es             = "http://localhost:4566"
+    elasticache    = "http://localhost:4566"
+    firehose       = "http://localhost:4566"
+    iam            = "http://localhost:4566"
+    kinesis        = "http://localhost:4566"
+    lambda         = "http://localhost:4566"
+    rds            = "http://localhost:4566"
+    redshift       = "http://localhost:4566"
+    route53        = "http://localhost:4566"
+    s3             = "http://s3.localhost.localstack.cloud:4566"
+    secretsmanager = "http://localhost:4566"
+    ses            = "http://localhost:4566"
+    sns            = "http://localhost:4566"
+    sqs            = "http://localhost:4566"
+    ssm            = "http://localhost:4566"
+    stepfunctions  = "http://localhost:4566"
+    sts            = "http://localhost:4566"
   }
 }
 
